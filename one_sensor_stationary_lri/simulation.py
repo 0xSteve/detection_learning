@@ -29,5 +29,5 @@ for k in range(5):
                 bestdepth[np.argmax(lri.p)] += 1
                 break
     # print("The best depth tally is : " + str(bestdepth))
-    print("Converge on depth: " + str(np.argmax(bestdepth)))
+    print("Converge on depth: " + str(np.argmax(bestdepth) + 1))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
