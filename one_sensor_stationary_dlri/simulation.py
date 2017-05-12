@@ -14,7 +14,7 @@ bestdepth = np.zeros(num_actions)
 E = [0.1, 0.2, 0.4, 0.2, 0.01, 0.09]
 det_obj = Pinger(E)
 for k in range(5):
-    for j in range(100):
+    for j in range(1000):
         # Caught me again...
         dlri.p = np.array(h.make_dp(num_actions))
         m = math.floor(num_actions / 2)
