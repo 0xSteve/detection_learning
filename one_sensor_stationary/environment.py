@@ -22,4 +22,6 @@ class Environment(object):
         '''The reward function is the heart and soul of this problem.'''
         # The reward function needs to be good, otherwise learning does
         # not happen.
-        pass
+        if(m == req):
+            return 0
+        return 1

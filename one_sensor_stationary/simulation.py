@@ -30,5 +30,6 @@ for k in range(5):
                 # The best depth counting from 0 (seasurface).
                 bestdepth[np.argmax(dlri.p)] += 1
                 break
-    print("The best depth tally is : " + str(bestdepth))
-    print("Converge on depth: " + str(np.argmax(bestdepth)))
+    # print("The best depth tally is : " + str(bestdepth))
+    # print("Converge on depth: " + str(np.argmax(bestdepth)))
+    print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
