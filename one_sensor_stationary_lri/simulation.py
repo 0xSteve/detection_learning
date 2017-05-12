@@ -1,34 +1,32 @@
 '''Elevator test.'''
-from discretized_lri import DLRI as DLRI
+from vssa_lri import Linear_R as LRI
 from environment import Environment
 from pinger import Pinger
 import numpy as np
 import helpers as h
-import math
 
 num_actions = 6
 
 env = Environment(num_actions)
-dlri = DLRI(num_actions)
+lri = LRI(num_actions)
 bestdepth = np.zeros(num_actions)
 E = [0.1, 0.2, 0.4, 0.2, 0.01, 0.09]
 det_obj = Pinger(E)
 for k in range(5):
-    for j in range(100):
+    for j in range(100000):
         # Caught me again...
-        dlri.p = np.array(h.make_dp(num_actions))
-        m = math.floor(num_actions / 2)
-        while(True):
+        lri.p = np.array(h.make_p(num_actions))
+        for i in range(10000):
+            m = lri.next_action()
             req = det_obj.request()
             resp = env.response(m, req)
             if(not resp):
-                dlri.do_reward(m)
+                lri.do_reward(m)
             else:
-                dlri.do_penalty()
-            m = dlri.next_action()
-            if(max(dlri.p) == (num_actions * num_actions)):
-                # The best depth counting from 0 (seasurface).
-                bestdepth[np.argmax(dlri.p)] += 1
+                lri.do_penalty()
+            if(max(lri.p) > 0.98):
+                # The best floor counting from 0.
+                bestdepth[np.argmax(lri.p)] += 1
                 break
     # print("The best depth tally is : " + str(bestdepth))
     print("Converge on depth: " + str(np.argmax(bestdepth)))
