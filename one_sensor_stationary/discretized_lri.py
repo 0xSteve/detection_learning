@@ -8,7 +8,7 @@ import numpy as np
 class DLRI(object):
 
     def __init__(self, num_actions):
-        self.p = np.array(h.make_dp(num_actions))
+        self.p = np.array(h.make_dp(num_actions * 10))
         self.best = 2 * num_actions  # Best time-cost.
 
     def next_action(self):
