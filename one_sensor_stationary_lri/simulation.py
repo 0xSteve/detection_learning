@@ -3,7 +3,6 @@ from vssa_lri import Linear_R as LRI
 from environment import Environment
 from pinger import Pinger
 import numpy as np
-import helpers as h
 
 # Define the number of discrete depths between the surface and seabed.
 num_actions = 6
