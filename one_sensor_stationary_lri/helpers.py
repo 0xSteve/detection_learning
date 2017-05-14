@@ -2,8 +2,8 @@
 
 
 def make_p(count):
-    '''A helper function that generates count based on the number of
-    actions.'''
+    '''A helper function that generates a probaiblity vector, p, based on
+       the number of actions.'''
     a = []
     for i in range(count):
         a.append(1 / count)
@@ -18,6 +18,8 @@ def subtract_nonzero(array, amount):
 
 
 def make_dp(count):
+    '''A helper function that generates a discretized probability vector for
+       the dlri automata.'''
     a = []
     for i in range(count):
         a.append(count)
@@ -35,6 +37,8 @@ def cdf(p_vector):
 
 
 def get_index(desired_action, cdf_array):
+    '''Given a desired action get the action that corresponds to it from the
+       cdf of the action probability vector.'''
     index = 0  # Return the first action as default.
     for i in range(len(cdf_array)):
         # Not actually looking for p looking for the CDF.
@@ -42,9 +46,3 @@ def get_index(desired_action, cdf_array):
             index = i
             break
     return index
-
-
-def reward_function(a1, a2):
-    pass
-    # return int(not abs(a1 - a2) < 2)
-    # return int(not (a1 == a2))
