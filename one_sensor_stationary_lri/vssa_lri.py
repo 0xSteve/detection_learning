@@ -17,8 +17,6 @@ class Linear_R(object):
         self.p = np.array(h.make_p(num_actions))
         # self.k = 1-lambda of the reward function for a LRI automata.
         self.k = 0.9
-        self.n = 0
-        self.best = 2 * num_actions  # Best time-cost.
 
     def next_action(self):
         '''Pick the next action of the learning automata based on the
