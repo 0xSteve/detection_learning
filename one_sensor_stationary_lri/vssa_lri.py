@@ -36,6 +36,9 @@ class Linear_R(object):
         index = h.get_index(randy, cdf)
         return index
 
+    def reset_actions(self):
+        self.p = np.array(h.make_p(len(self.p)))
+
     def do_reward(self, action):
         '''Update the action probability, self.p, given the environment
            issued a reward.'''
