@@ -22,13 +22,13 @@ E = [0.1, 0.2, 0.4, 0.2, 0.01, 0.09]
 det_obj = Pinger(E)  # Create the detectable object.
 
 # Run 5 individual experiments experiments.
-for k in range(5):
+for k in range(1):
     # Generate an ensemble of 100000 experiments
     for j in range(100000):
         # reset the action probabilities.
         lrp.reset_actions()
         # Run a single experiment. Terminate if it reaches 10000 iterations.
-        for i in range(10000):
+        while(True):
             # Define m as the next action predicting the depth of the object.
             m = lrp.next_action()
             # Defin req as the next detectable object depth.
@@ -38,7 +38,7 @@ for k in range(5):
             if(not resp):
                 lrp.do_reward(m)
             else:
-                lrp.do_penalty()
+                lrp.do_penalty(m)
             if(max(lrp.p) > 0.98):
                 # The best depth counting from 0.
                 # Break at 98% convergence to a single depth.
@@ -47,3 +47,5 @@ for k in range(5):
     # print("The best depth tally is : " + str(bestdepth))
     print("Converge on depth: " + str(np.argmax(bestdepth) + 1))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
+    print("The sum of the probability vector is: " + str(sum(bestdepth /
+          sum(bestdepth))))
