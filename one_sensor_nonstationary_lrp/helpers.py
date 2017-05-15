@@ -6,7 +6,7 @@ def make_p(count):
        the number of actions.'''
     a = []
     for i in range(count):
-        a.append(1 / count)
+        a.append(1.0 / count)
     return a
 
 

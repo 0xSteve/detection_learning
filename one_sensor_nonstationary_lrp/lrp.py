@@ -8,15 +8,18 @@ import numpy as np
 # creative.
 
 
-class Linear_R(object):
+class Linear_Reward_Penalty(object):
     '''The Linear Reward-Inaction model (for now).'''
 
     def __init__(self, num_actions):
         '''Create a new Linear Reward-Inaction object.'''
         # self.p is the learned action probability vector.
         self.p = np.array(h.make_p(num_actions))
-        # self.k = 1-lambda of the reward function for a LRI automata.
-        self.k = 0.9
+        # self.a
+        self.a = 0.9
+        # sekf.b
+        self.b = 0.1
+        self.r = num_actions
 
     def next_action(self):
         '''Pick the next action of the learning automata based on the
@@ -42,13 +45,19 @@ class Linear_R(object):
     def do_reward(self, action):
         '''Update the action probability, self.p, given the environment
            issued a reward.'''
-        self.p[action] += self.k * (1 - self.p[action])
+        self.p[action] += self.a * (1 - self.p[action])
         # Need to update penalty probabilities.
         for i in range(len(self.p)):
             if(i != action):
                 # print("i = " + str(i) + ". P = " + str(self.p))
-                self.p[i] = (1 - self.k) * self.p[i]
+                self.p[i] = (1 - self.a) * self.p[i]
 
-    def do_penalty(self):
-        '''LRI automata do nothing on penalty.'''
-        pass
+    def do_penalty(self, action):
+        '''Update the action probability, self.p, give the environment issued
+           a penalty.'''
+        self.p[action] = (1 - self.b) * self.p[action]
+        # Need to update penalty probabilities.
+        for i in range(len(self.p)):
+            if(i != action):
+                # print("i = " + str(i) + ". P = " + str(self.p))
+                self.p[i] = self.b / (self.r - 1) + (1 - self.b) * self.p[i]
