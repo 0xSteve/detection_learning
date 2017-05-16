@@ -8,7 +8,12 @@ This folder contains a solution using a discretized linear reward-inaction autom
 # one_sensor_stationary_lri 
 ## Linear Reward-Inaction (LRI)
 
-This folder contains the solution that is most likely to be useful for the applications of detection learning in USNs
+This folder contains the solution that is most likely to be useful for the applications of detection learning in USNs.
+
+# one_sensor_stationary_lrp
+## Linear Reward-Penalty (LRP)
+
+This an ergodic learning automata, and is likely to be the most useful automata to be applied in a nonstaionary random environment.
 
 # Running the simulations.
 
