@@ -44,6 +44,4 @@ for k in range(1):
                 # Break at 98% convergence to a single depth.
                 bestdepth[np.argmax(lrp.p)] += 1
                 break
-    # print("The best depth tally is : " + str(bestdepth))
-    print("Converge on depth: " + str(np.argmax(bestdepth) + 1))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
