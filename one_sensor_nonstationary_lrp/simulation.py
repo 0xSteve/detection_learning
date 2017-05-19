@@ -47,5 +47,3 @@ for k in range(1):
     # print("The best depth tally is : " + str(bestdepth))
     print("Converge on depth: " + str(np.argmax(bestdepth) + 1))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
-    print("The sum of the probability vector is: " + str(sum(bestdepth /
-          sum(bestdepth))))
