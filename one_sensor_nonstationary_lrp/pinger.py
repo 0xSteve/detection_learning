@@ -18,3 +18,7 @@ class Pinger(object):
         ping_cdf = h.cdf(self.E)
         ping = h.get_index(randy, ping_cdf)
         return ping
+
+    def set_env(self, E):
+        '''Change the environmental probabilities (E).'''
+        self.E = np.array(E)
