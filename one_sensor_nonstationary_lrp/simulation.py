@@ -1,14 +1,15 @@
 '''Underwater Detection Experiment.'''
 from lrp import Linear_Reward_Penalty as LRP
+from mse import MSE
 from environment import Environment
 from pinger import Pinger
 import numpy as np
 
 # Define the number of discrete depths between the surface and seabed.
 num_actions = 6
-n = 100000
+n = 10000
 interval = 1
-time_between = n / interval
+time_between = (n / interval) - 1
 
 # Define the environment with the number of discrete depths for the detectable
 # object.
@@ -20,9 +21,16 @@ lrp = LRP(num_actions)  # The learning automata.
 # The most probable depth that the object exists at, as calculated by the
 # learner.
 bestdepth = np.zeros(num_actions)
-# The penalty probabilities for the learner.
-E = [0.1, 0.2, 0.4, 0.2, 0.01, 0.09]
-det_obj = Pinger(E)  # Create the detectable object.
+# Define the Markovian Switching Environment that will feed probabilities to
+# the Pinger object.
+Es = [
+     [0.1, 0.2, 0.4, 0.2, 0.01, 0.09],
+     [0, 0, 0.8, 0.1, 0, 0.1],
+     [0, 0, 0, 1, 0, 0],
+     [0.1, 0.1, 0.6, 0.05, 0.01, 0.04]]
+mse = MSE(Es)
+
+det_obj = Pinger(mse.env_now())  # Create the detectable object.
 
 # Run 5 individual experiments experiments.
 for k in range(4):
@@ -47,4 +55,9 @@ for k in range(4):
                 # Break at 98% convergence to a single depth.
                 bestdepth[np.argmax(lrp.p)] += 1
                 break
+        if(j == time_between):
+            mse.next_env()
+            det_obj.set_env(mse.env_now())
+            print("The desired vector is now: " + str(mse.env_now()))
+
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
