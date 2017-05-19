@@ -1,15 +1,15 @@
 '''Module containing the requester class.'''
-import numpy as np
+
 from random import uniform
 import helpers as h
 
 
 class Pinger(object):
     '''An object pinging an acoustic signature from a depth. It pings with
-        probability vector E.'''
+        probability vector E. The Pinger object expects a numpy array.'''
 
     def __init__(self, E):
-        self.E = np.array(E)
+        self.E = E
 
     def request(self):
         '''The method that determines the actual ping that will be
@@ -20,5 +20,6 @@ class Pinger(object):
         return ping
 
     def set_env(self, E):
-        '''Change the environmental probabilities (E).'''
-        self.E = np.array(E)
+        '''Change the environmental probabilities (E). E is expected to be a
+           numpy array.'''
+        self.E = E
