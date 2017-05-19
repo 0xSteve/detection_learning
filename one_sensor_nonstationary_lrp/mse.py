@@ -33,3 +33,7 @@ class MSE(object):
         '''Switch to the next environment in the MSE.'''
         self.cur_env = self.cur_env + 1 % len(self.envs)
         return self.envs[self.cur_env]
+
+    def cur_env(self):
+        '''Get the current environment.'''
+        return self.envs[self.cur_env]
