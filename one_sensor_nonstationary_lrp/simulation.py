@@ -6,6 +6,9 @@ import numpy as np
 
 # Define the number of discrete depths between the surface and seabed.
 num_actions = 6
+n = 100000
+interval = 1
+time_between = n / interval
 
 # Define the environment with the number of discrete depths for the detectable
 # object.
@@ -22,9 +25,9 @@ E = [0.1, 0.2, 0.4, 0.2, 0.01, 0.09]
 det_obj = Pinger(E)  # Create the detectable object.
 
 # Run 5 individual experiments experiments.
-for k in range(1):
-    # Generate an ensemble of 100000 experiments
-    for j in range(100000):
+for k in range(4):
+    # Generate an ensemble of n experiments
+    for j in range(n):
         # reset the action probabilities.
         lrp.reset_actions()
         # Run a single experiment. Terminate if it reaches 10000 iterations.
