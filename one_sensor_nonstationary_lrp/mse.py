@@ -14,6 +14,8 @@ class MSE(object):
            manual.'''
         self.envs = np.array(environments)
         self.time_between = 0
+        # The first environment is always the 0th index in the environments.
+        self.cur_env = 0  # This is the current environment being used.
         '''Create a new instance of the MSE class.'''
         # Could possibly pass number of environments as a variable.
         # Could possibly pass amount of time between intervals as a variable.
@@ -29,4 +31,5 @@ class MSE(object):
 
     def next_env(self):
         '''Switch to the next environment in the MSE.'''
-        pass
+        self.cur_env = self.cur_env + 1 % len(self.envs)
+        return self.envs[self.cur_env]
