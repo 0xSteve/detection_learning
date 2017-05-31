@@ -33,7 +33,7 @@ mse = MSE(Es)
 det_obj = Pinger(mse.env_now())  # Create the detectable object.
 
 # Run 5 individual experiments experiments.
-for k in range(Es):
+for k in range(len(Es)):
     # Generate an ensemble of n experiments
     for j in range(n):
         # reset the action probabilities.
