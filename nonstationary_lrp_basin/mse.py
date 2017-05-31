@@ -19,6 +19,7 @@ class MSE(object):
         '''Create a new instance of the MSE class.'''
         # Could possibly pass number of environments as a variable.
         # Could possibly pass amount of time between intervals as a variable.
+        pass
 
     def set_environments(self, environments):
         '''Set the environments that are in the MSE.'''
