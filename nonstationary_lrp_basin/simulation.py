@@ -24,11 +24,6 @@ lrp = LRP(num_actions)  # The learning automata.
 bestdepth = np.zeros(num_actions)
 # Define the Markovian Switching Environment that will feed probabilities to
 # the Pinger object.
-# Es = [
-#      [0.1, 0.2, 0.4, 0.2, 0.01, 0.09],
-#      [0, 0, 0.8, 0.1, 0, 0.1],
-#      [0, 0, 0, 1, 0, 0],
-#      [0.1, 0.1, 0.6, 0.05, 0.01, 0.04]]
 Es = []
 with open('environments.csv', 'rU') as f:
     reader = csv.reader(f)
@@ -56,7 +51,7 @@ for k in range(len(Es)):
                 lrp.do_reward(m)
             else:
                 lrp.do_penalty(m)
-            if(max(lrp.p) > 0.98):
+            if(max(lrp.p) > 0.999):
                 # The best depth counting from 0.
                 # Break at 98% convergence to a single depth.
                 bestdepth[np.argmax(lrp.p)] += 1

@@ -16,9 +16,9 @@ class Linear_Reward_Penalty(object):
         # self.p is the learned action probability vector.
         self.p = np.array(h.make_p(num_actions))
         # self.a
-        self.a = 0.8
+        self.a = 0.99
         # sekf.b
-        self.b = 0.5
+        self.b = 0.2
         self.r = num_actions
 
     def next_action(self):
