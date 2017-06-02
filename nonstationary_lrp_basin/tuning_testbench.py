@@ -8,8 +8,9 @@ test_lrp = LRP(5)
 penaly_probs = [0.3, 0.1, 0.1, 0.1, 0.4]
 penalizer = Pinger(np.array(penaly_probs))
 env = Environment(5)
-
+print("The value for a is initially " + str(test_lrp.a))
 b = tune.find_optimal_a(test_lrp, env, penalizer)
+print("The value for a after tuning is " + str(test_lrp.a))
 test_lrp.a = b
 n = 10000
 bestdepth = np.zeros(5)
@@ -33,4 +34,5 @@ for j in range(n):
                 # Break at 98% convergence to a single depth.
                 bestdepth[np.argmax(test_lrp.p)] += 1
                 break
-print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
+print("The desired probability vector is: " + str(penaly_probs))
+print("The actual probability vector is: " + str(bestdepth / sum(bestdepth)))
