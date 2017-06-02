@@ -1,4 +1,4 @@
-'''This module tunes the LRI to optimize for the environment'''
+'''This module tunes the LRP to optimize for the environment'''
 import numpy as np
 
 
@@ -29,8 +29,19 @@ def find_optimal_a(la, env, teacher, desired_accuracy=0.95,
     return H
 
 
-def find_optimal_b():
-    pass
+def find_optimal_b(la, env, teacher, desired_accuracy=0.95,
+                   low=0.0001, high=0.999999):
+    L = low
+    H = high
+
+    while(percent_diff(L, H) >= 0.05):
+        b = (L + H) / 2
+        accuracy = find_accuracy(la, env, teacher, la.a, b)
+        if(accuracy >= desired_accuracy):
+            H = b
+        else:
+            L = b
+    return H
 
 
 def percent_diff(value1, value2):
