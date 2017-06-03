@@ -1,17 +1,19 @@
 from lrp import Linear_Reward_Penalty as LRP
 from environment import Environment
 from pinger import Pinger
-import tune_lri as tune
+import tune_lrp as tune
 import numpy as np
 
 test_lrp = LRP(5)
 penaly_probs = [0.3, 0.1, 0.1, 0.1, 0.4]
 penalizer = Pinger(np.array(penaly_probs))
 env = Environment(5)
-print("The value for a is initially " + str(test_lrp.a))
-b = tune.find_optimal_a(test_lrp, env, penalizer)
+a = tune.find_optimal_a(test_lrp, env, penalizer, 0.8)
 print("The value for a after tuning is " + str(test_lrp.a))
-test_lrp.a = b
+b = tune.find_optimal_b(test_lrp, env, penalizer, 0.8)
+print("The value for b after tuning is " + str(test_lrp.b))
+test_lrp.a = a
+test_lrp.b = b
 n = 10000
 bestdepth = np.zeros(5)
 for j in range(n):

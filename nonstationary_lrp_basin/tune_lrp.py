@@ -23,8 +23,10 @@ def find_optimal_a(la, env, teacher, desired_accuracy=0.95,
         a = (L + H) / 2
         accuracy = find_accuracy(la, env, teacher, a)
         if(accuracy >= desired_accuracy):
+            print("H = a, a = " + str(a))
             H = a
         else:
+            print("H = a, a = " + str(a))
             L = a
     return H
 
@@ -38,8 +40,10 @@ def find_optimal_b(la, env, teacher, desired_accuracy=0.95,
         b = (L + H) / 2
         accuracy = find_accuracy(la, env, teacher, la.a, b)
         if(accuracy >= desired_accuracy):
+            print("H = b, b = " + str(b))
             H = b
         else:
+            print("L = b, b = " + str(b))
             L = b
     return H
 
