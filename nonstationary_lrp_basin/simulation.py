@@ -3,6 +3,7 @@ from lrp import Linear_Reward_Penalty as LRP
 from mse import MSE
 from environment import Environment
 from pinger import Pinger
+import tune_lrp as tune
 import numpy as np
 import csv
 
@@ -39,6 +40,10 @@ for k in range(len(Es)):
     for j in range(n):
         # reset the action probabilities.
         lrp.reset_actions()
+        print("here, waiting for A")
+        lrp.a = tune.find_optimal_a(lrp, env, det_obj)
+        print("here, waiting for B")
+        lrp.b = tune.find_optimal_b(lrp, env, det_obj)
         # Run a single experiment. Terminate if it reaches 10000 iterations.
         while(True):
             # Define m as the next action predicting the depth of the object.
@@ -58,6 +63,8 @@ for k in range(len(Es)):
                 break
         # if(j == time_between):
         print("The desired vector is now: " + str(mse.env_now()))
+        print("The tuned value for a and b is: " + str(lrp.a) + ", " +
+              str(lrp.b))
         print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
         mse.next_env()
         det_obj.set_env(mse.env_now())

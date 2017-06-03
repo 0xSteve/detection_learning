@@ -8,9 +8,9 @@ test_lrp = LRP(5)
 penaly_probs = [0.3, 0.1, 0.1, 0.1, 0.4]
 penalizer = Pinger(np.array(penaly_probs))
 env = Environment(5)
-a = tune.find_optimal_a(test_lrp, env, penalizer, 0.8)
+a = tune.find_optimal_a(test_lrp, env, penalizer)
 print("The value for a after tuning is " + str(test_lrp.a))
-b = tune.find_optimal_b(test_lrp, env, penalizer, 0.8)
+b = tune.find_optimal_b(test_lrp, env, penalizer)
 print("The value for b after tuning is " + str(test_lrp.b))
 test_lrp.a = a
 test_lrp.b = b
@@ -31,7 +31,7 @@ for j in range(n):
                 test_lrp.do_reward(m)
             else:
                 test_lrp.do_penalty(m)
-            if(max(test_lrp.p) > 0.999):
+            if(max(test_lrp.p) > 0.98):
                 # The best depth counting from 0.
                 # Break at 98% convergence to a single depth.
                 bestdepth[np.argmax(test_lrp.p)] += 1

@@ -54,6 +54,7 @@ def percent_diff(value1, value2):
 
 def simulate_once(la, env, teacher):
     # bestdepth = np.zeros(len(la.p))
+    counter = 0
     while(True):
             # Define m as the next action predicting the depth of the object.
             m = la.next_action()
@@ -69,4 +70,6 @@ def simulate_once(la, env, teacher):
                 # The best depth counting from 0.
                 # Break at 98% convergence to a single depth.
                 break
+            counter += 1
+    # print("Max p is: " + str(max(la.p)))
     return round(la.p[np.argmax(teacher.E)] / sum(la.p), 0)
