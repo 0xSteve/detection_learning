@@ -32,7 +32,7 @@ def find_optimal_a(la, env, teacher, desired_accuracy=0.95,
 
 
 def find_optimal_b(la, env, teacher, desired_accuracy=0.95,
-                   low=0.0001, high=0.999999):
+                   low=0.000001, high=0.999999):
     L = low
     H = high
 
