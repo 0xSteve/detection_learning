@@ -1,8 +1,0 @@
-Currently, the environments are both too large to be practical for a proof of concept.
-
-After applying the tuner there is no learning possible with these parameters.
-
-First fix. cut the environment to 5 depths.
-use total power not arrivals.
-
-also consider writing an algorithm for applied learning and testing in netlogo
