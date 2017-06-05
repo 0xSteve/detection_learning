@@ -1,17 +1,53 @@
+globals [pos x]
 breed [sources source]
-
+breed [receivers receiver]
+breed [transmissions transmission]
 sources-own [depth]
+receivers-own [depth]
+
+;;setup the environment
 to setup
   clear-all
   reset-ticks
+  setup-sources
+  setup-receivers
+end
+
+;;source methods
+to setup-sources
   create-sources 1
+  ask sources [
+    set color red
+    set shape "circle"
+    move-to patch 5 2
+  ]
+end
+;;receiver methods
+to setup-receivers
+  create-receivers 5
+
+  ask (receivers) [
+      set color red
+      set shape "square"
+  ]
+  set x 1
+  set pos 2
+  foreach (sort receivers)
+  [
+    ask receiver x [
+      move-to patch 20 pos
+    ]
+    set x x + 1
+    set pos pos + 5
+  ]
+
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-647
-448
+556
+357
 -1
 -1
 13.0
@@ -21,13 +57,13 @@ GRAPHICS-WINDOW
 1
 1
 0
+0
+0
 1
-1
-1
--16
-16
--16
-16
+0
+25
+0
+25
 0
 0
 1
