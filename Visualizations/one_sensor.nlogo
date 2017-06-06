@@ -10,7 +10,7 @@ to setup
   clear-all
   reset-ticks
   setup-sources
-  setup-receivers
+  ;;setup-receivers
 end
 
 ;;source methods
@@ -22,7 +22,26 @@ to setup-sources
     move-to patch 5 22
   ]
 end
+
+to send-transmission
+  ask sources [
+    hatch-transmissions 1 [
+      pen-down
+      move-to patch 20 7
+      pen-up
+    ]
+  ]
+end
+
 ;;receiver methods
+to setup-uav
+  create-receivers 1
+  ask receivers [
+    set color red
+    set shape "airplane"
+    move-to patch 20 22
+  ]
+end
 to setup-receivers
   create-receivers 5
 
@@ -40,7 +59,18 @@ to setup-receivers
     set x x + 1
     set pos pos + 5
   ]
+end
 
+to change-receiver-depth
+end
+
+;; transmission methods
+to erase-transmissions
+  clear-drawing
+  ask transmissions
+  [
+    die
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -83,6 +113,40 @@ T
 OBSERVER
 NIL
 S
+NIL
+NIL
+1
+
+BUTTON
+37
+88
+171
+121
+send one msg
+send-transmission
+NIL
+1
+T
+OBSERVER
+NIL
+1
+NIL
+NIL
+1
+
+BUTTON
+47
+137
+157
+170
+clear msgs
+erase-transmissions
+NIL
+1
+T
+OBSERVER
+NIL
+E
 NIL
 NIL
 1
