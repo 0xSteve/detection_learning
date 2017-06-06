@@ -1,4 +1,4 @@
-globals [pos x]
+globals [pos x c ]
 breed [sources source]
 breed [receivers receiver]
 breed [transmissions transmission]
@@ -10,6 +10,7 @@ to setup
   clear-all
   reset-ticks
   setup-sources
+  setup-uav
   ;;setup-receivers
 end
 
@@ -38,6 +39,7 @@ to setup-uav
   create-receivers 1
   ask receivers [
     set color red
+    set heading 270
     set shape "airplane"
     move-to patch 20 22
   ]
@@ -66,6 +68,7 @@ end
 
 ;; transmission methods
 to erase-transmissions
+  clear-drawing
   ask transmissions
   [
     die
