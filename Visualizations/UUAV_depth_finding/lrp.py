@@ -18,7 +18,7 @@ class Linear_Reward_Penalty(object):
         # self.a
         self.a = 0.9
         # sekf.b
-        self.b = 0.2
+        self.b = 0.5
         self.r = num_actions
 
     def next_action(self):
