@@ -123,7 +123,8 @@ for k in range(len(mse.envs)):
     receiver.write(bestdepth[np.argmax(bestdepth)] / sum(bestdepth))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
     print("Best depth is: " + str(np.argmax(bestdepth) * 14 + 14) + "m. " +
-          "The desired depth is: " + str(np.argmax(mse.env_now)))
+          "The desired depth is: " + str(np.argmax(mse.env_now()) * 14 + 14) +
+          "m.")
     print("*************************************************************")
     mse.next_env()
     time.sleep(5)
