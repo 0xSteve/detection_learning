@@ -63,9 +63,16 @@ Es = [[0.48796, 0.024438, 0.067891, 0.41971, 0.00],
       [0.018288, 0.083153, 0.50582, 0.39274, 0.00],
       [0.48455, 0.015527, 0.18197, 0.31795, 0.00],
       [0.01675, 0.58845, 0.11313, 0.28167, 0.00]]
+
+En = [[0.021431, 0.071479, 0.40562, 0.50147, 0.00],
+      [0.48796, 0.024438, 0.067891, 0.41971, 0.00],
+      [0.018288, 0.083153, 0.50582, 0.39274, 0.00],
+      [0.01675, 0.58845, 0.11313, 0.28167, 0.00],
+      [0.48455, 0.015527, 0.18197, 0.31795, 0.00]]
 mse = MSE(Es)
+mse1 = MSE(En)
 det_obj = Pinger(mse.env_now())  # Create the detectable object.
-first_uav = Pinger(np.array([0.32, 0.1, 0.06, 0.42, 0.1]))
+first_uav = Pinger(mse1.env_now())
 #  set up transmission vectors
 for i in range(num_actions):
         transmission.append(turtle.Turtle())
@@ -90,6 +97,7 @@ for k in range(len(mse.envs)):
         transmission[i].write(mse.env_now()[i])
 
     det_obj.set_env(mse.env_now())
+    first_uav.set_env(mse1.env_now())
     print("The desired vector is now: " + str(mse.env_now()))
     # lrp.a = tune.find_optimal_a(lrp, env, det_obj)
     # print("Optimized value for a is: " + str(lrp.a))
@@ -103,7 +111,6 @@ for k in range(len(mse.envs)):
         # reset the action probabilities.
         # lrp.reset_actions()
         count = 0
-        count1 = 0
         # lrp.b = tune.find_optimal_b(lrp, env, det_obj)
         # Run a single experiment. Terminate if it reaches 10000 iterations.
         while(True and count < 10000):
@@ -138,35 +145,39 @@ for k in range(len(mse.envs)):
         transmission1[i].setpos(-90, depths[np.argmax(bestdepth)])
         transmission1[i].pendown()
         transmission1[i].goto(50, depths[i])
-        transmission1[i].write(first_uav.E[i])
-    while(True and count1 < 10000):
-        # Define m as the next action predicting the depth of the object.
-        m = lrp1.next_action()
-        # Define req as the next detectable object depth.
-        req1 = first_uav.request()
-        # reward if m = req.
-        resp1 = env.response(m, req)
-        if(not resp):
-            lrp1.do_reward(m)
-        else:
-            lrp1.do_penalty(m)
-        if(max(lrp1.p) > 0.999):
-            # The best depth counting from 0.
-            # Break at 98% convergence to a single depth.
-            bestdepth1[np.argmax(lrp1.p)] += 1
-            break
-        count1 += 1
-    if (current_best1 != np.argmax(bestdepth1)):
-        receiver1.goto(100, depths[np.argmax(bestdepth1)])
-        current_best1 = np.argmax(bestdepth1)
+        transmission1[i].write(mse1.env_now()[i])
+    for l in range(n):
+        count1 = 0
+        while(True and count1 < 10000):
+            # Define m as the next action predicting the depth of the object.
+            m = lrp1.next_action()
+            # Define req as the next detectable object depth.
+            req1 = first_uav.request()
+            # reward if m = req.
+            resp1 = env.response(m, req1)
+            if(not resp1):
+                lrp1.do_reward(m)
+            else:
+                lrp1.do_penalty(m)
+            if(max(lrp1.p) > 0.98):
+                # The best depth counting from 0.
+                # Break at 98% convergence to a single depth.
+                bestdepth1[np.argmax(lrp1.p)] += 1
+                break
+            count1 += 1
+        if (current_best1 != np.argmax(bestdepth1)):
+            receiver1.goto(100, depths[np.argmax(bestdepth1)])
+            current_best1 = np.argmax(bestdepth1)
+    print("p " + str(bestdepth1 / sum(bestdepth1)) + "E " + str(mse1.env_now()))
     receiver1.goto(100, depths[np.argmax(bestdepth1)])
-    receiver1.write(bestdepth[np.argmax(bestdepth1)] / sum(bestdepth1))
+    receiver1.write(bestdepth1[np.argmax(bestdepth1)] / sum(bestdepth1))
     print("The probability vector is: " + str(bestdepth / sum(bestdepth)))
     print("Best depth is: " + str(np.argmax(bestdepth) * 14 + 14) + "m. " +
           "The desired depth is: " + str(np.argmax(mse.env_now()) * 14 + 14) +
           "m.")
     print("*************************************************************")
     mse.next_env()
+    mse1.next_env()
     time.sleep(5)
 print("Ready to exit.")
 #  Exit
