@@ -1,5 +1,6 @@
 '''This module contains the S-model Environment.'''
 import numpy as np
+from random import uniform as u
 
 
 class SEnvironment(object):
@@ -18,4 +19,4 @@ class SEnvironment(object):
     def response(self, depth_index):
         '''Respond to the mobile-agent the value of the timeout
            probability.'''
-        return self.c[depth_index]
+        return self.c[depth_index] <= u(0, 1)

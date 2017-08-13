@@ -20,10 +20,10 @@ class Agent(object):
     def move(self, action):
         '''Move the mobile-agent based on the action chosen by the LRP LA.
            This movement depends on the precision and channel depth.'''
-        if action == 0:
+        if self.action == 0:
             # DIVE
             self.dive()
-        elif action == 2:
+        elif self.action == 2:
             # SURFACE
             self.surface()
         else:
@@ -66,21 +66,21 @@ class Agent(object):
            environment. This will be simulated through the use of a random
            number and the probability for the current depth of the
            mobile-agent.'''
-        self.current_to = response
+        # self.current_to = response
         # There is an important esoteric feature in this if statement.
         # Notice that the LA will reward up to two actions for the same result.
         # If the curreent best is equal to the absolute best both the
         # do-nothing and last rewarded action could be rewarded here. This is
         # intended by design, since the change in depth must be over estimated
         # before it can truly be found.
-        if(self.current_to > self.best_to):
+        if(response):
             # This is the condition where the mobile-agent must tell the LRP
             # LA that a penalty is to be delivered.
             self.lrp.do_penalty(self.action)
         else:
             # Tell the LA that a reward is to be delivered.
             # This is the best value ever observed.
-            self.best_to = self.current_to
+            # self.best_to = self.current_to
             self.lrp.do_reward(self.action)
 
     def next_action(self):

@@ -14,4 +14,6 @@ rando = int(u(0, 70))  # This will be the initial depth of the mobile-agent.
 # precision of 1m, max depth of 70m.
 experiment = Experiment(rando, 70, p_vec, 10)
 
-experiment.evaluate()
+experiment.ensemble_evaluation(10)
+print("the max of the learned probability vector is: " + str(max(experiment.learned_p)))
+print("the max of the actual probability vector is: " + str(max(p_vec)))
