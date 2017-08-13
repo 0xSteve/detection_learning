@@ -28,15 +28,27 @@ class agent(object):
             # energy in the mobile-agent by not forcing it to move at all.
             pass
 
+    def move_function(self):
+        '''There are lots of optimization possibilities here. For
+           now we will consider only a unimodal probability dist
+           and linear movement function.'''
+        return (self.channel_depth / self.precision)
+
     def dive(self):
         '''This method uses the precision and channel depth to move an
            increment towards the seabed.'''
-        pass
+        interval = self.move_function()
+        # Only move if it is possible.
+        if(self.depth + interval <= self.channel_depth):
+            self.depth += interval
 
     def surface(self):
         '''This method uses the precision and channel depth to move an
            increment towards the sea surface.'''
-        pass
+        interval = self.move_function()
+        # Only move if it is possible.
+        if(self.depth - interval >= 0):
+            self.depth -= interval
 
     def send(self):
         '''This function will send the depth to the environment, which will
@@ -58,3 +70,7 @@ class agent(object):
         else:
             # Tell the LA that a reward is to be delivered.
             self.lrp.do_reward(self.action)
+
+    def next_action(self):
+        '''encapsulates the LRP next_action function.'''
+        self.action = self.lrp.next_action()
