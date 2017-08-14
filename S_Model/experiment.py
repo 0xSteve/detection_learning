@@ -19,13 +19,16 @@ class Experiment(object):
         self.agent.next_action()
 
     def ensemble_evaluation(self, number_iterations):
+        abs_count = 0
         for i in range(number_iterations):
             count = 0
             self.agent.lrp.reset_actions()
-            while(count < 10000):
+            # print(self.agent.depth)
+            while(True and count < 10000):  # and count < 1000000
                 self.evaluate()
-                self.learned_p[self.agent.depth] += 1
                 count += 1
-            print(self.learned_p)
-            self.learned_p = self.learned_p / count
-            print(self.learned_p)
+                if(max(self.agent.lrp.p) > 0.90):
+                    self.learned_p[self.agent.depth - 1] += 1
+                    break
+            abs_count += 1
+        self.learned_p = self.learned_p / abs_count
