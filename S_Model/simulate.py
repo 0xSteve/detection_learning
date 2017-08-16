@@ -13,16 +13,51 @@ p_vec.pop()
 rando = int(u(0, 70))  # This will be the initial depth of the mobile-agent.
 # Create a new experiment with a randomly seeded depth for the agent and
 # precision of 1m, max depth of 70m.
-experiment = Experiment(30, 70, p_vec, 10)
+experiment = Experiment(rando, 70, p_vec, 10)
 
-experiment.ensemble_evaluation(3000)
-print("*****************************************************************************")
-print("the max of the learned probability vector is: " + str(max(experiment.learned_p)))
-print("the max of the actual probability vector is: " + str(max(p_vec)))
-a = np.array(experiment.learned_p)
+experiment.ensemble_evaluation(20)
+print("********************************************************************")
+a = np.array(experiment.learned_best)
 b = np.array(p_vec)
-print(len(experiment.learned_p))
-print(np.where(a == a.max()))
-print(np.where(b == b.max()))
-print(a)
-print(a[np.where(a == a.max())])
+print("The location of the best depth is: " +
+      str(np.where(a == a.max())))
+print("the confidence of the learned best depth is: " +
+      str(max(experiment.learned_best)))
+print("The maximums of the environment vector are at indices: " +
+      str(np.where(b == b.max())))
+# print("the max of the actual probability vector is: " + str(max(p_vec)))
+
+# Write to a file to send to matlab.
+
+# with open('learnedBest.csv', 'w') as csvfile:
+#     w = csv.writer(csvfile, dialect='excel')
+#     for i in range(len(experiment.learned_best)):
+#         w.writerow(str(experiment.learned_best[i]))
+w = open('learnedBest.csv', 'w')
+for i in range(len(experiment.learned_best) - 1):
+    w.write(str(experiment.learned_best[i]) + '\n')
+w.write(str(experiment.learned_best[len(experiment.learned_best) - 1]))
+w.close()
+
+# w = open('learnedDist.csv', 'w')
+# for i in range(len(experiment.dist_est) - 1):
+#     w.write(str(experiment.dist_est[i]) + '\n')
+# w.write(str(experiment.dist_est[len(experiment.dist_est) - 1]))
+# w.close()
+
+w = open('Action1Probability.csv', 'w')
+for i in range(len(experiment.action1_p) - 1):
+    w.write(str(experiment.action1_p[i]) + '\n')
+w.write(str(experiment.action1_p[len(experiment.action1_p) - 1]))
+w.close()
+w = open('Action0Probability.csv', 'w')
+for i in range(len(experiment.action0_p) - 1):
+    w.write(str(experiment.action0_p[i]) + '\n')
+w.write(str(experiment.action0_p[len(experiment.action0_p) - 1]))
+w.close()
+w = open('Action2Probability.csv', 'w')
+for i in range(len(experiment.action2_p) - 1):
+    w.write(str(experiment.action2_p[i]) + '\n')
+w.write(str(experiment.action2_p[len(experiment.action2_p) - 1]))
+w.close()
+print("Simulation complete!")
