@@ -5,20 +5,6 @@ The current working solution can be found in branch S-model.
 
 #
 
-## one_sensor_stationary_dlri 
-### Discretized Linear Reward-Inaction (DLRI)
-
-This folder contains a solution using a discretized linear reward-inaction automata. It is not as accurate as the linear reward-inaction, however it converges faster than any other model in this project.  This particular learning automata solution not likely to be useful for the detection learning problem.
-
-## one_sensor_stationary_lri 
-### Linear Reward-Inaction (LRI)
-
-This folder contains the solution that is most likely to be useful for the applications of detection learning in USNs.
-
-## one_sensor_stationary_lrp
-### Linear Reward-Penalty (LRP)
-
-This an ergodic learning automata, and is likely to be the most useful automata to be applied in a nonstaionary random environment.
 
 # Running the simulations.
 
