@@ -27,7 +27,7 @@ This folder contains the solution that is most likely to be useful for the appli
 
 This an ergodic learning automata, and is likely to be the most useful automata to be applied in a nonstaionary random environment.
 
-#Realistic Learning in a Stationary environment
+# Realistic Learning in a Stationary environment
 
 In this folder we have a simulation using reinforcement learning based on the maximum power of a transmitted signal originating from a simulated two-dimensional isotropic source in a reconstruction of the Bedford Basin, Halifax, NS, Canada.
 
@@ -35,7 +35,7 @@ Environmental data used in the reconstruction was provided courtesy of The DRDC 
 
 In this example, we show that the maximum power metric is suitably precise for accurate learning of the link-state in an UASN.
 
-#Visualizations
+# Visualizations
 
 In this folder we have some visualizations using turtle graphics in python.
 
