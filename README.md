@@ -1,21 +1,14 @@
 # Learning Automata (LA) solutions to the link detection problem in Underwater surveillance networks (USNs)
 
-The current working solution can be found in branch S-model.
+The current practical solution model can be found in S-model. It is the research in the S-model folder that is associated with Learning to Communicated. A work submitted to the ACM WUWNET 2017 conference.
 
+# P-model
+The earliest stages of this work utilizing a binary environmental response, corresponding to a discrete-finite number of possible actions corresponding to operating depth. An impractial solution, which becomes intractable in memory as precision increases.
 
-#
+The work in P-model paved a path for a practical continuous control model used in S-model
 
-
-# Running the simulations.
-
-To run a simulation, in the desired simulation folder, open a terminal and type:
-
-python3 simulation.py
-
-or,for visualizations of algorithms type:
-
-python3 visualize.py
-
+#S-model
+This directory contains the current research in link-state detection learning in limited mobility applied to underwataer acoustic sensor networks.
 
 # Installation of Dependencies.
 All code is written and tested using Python 3.6.x, and requires the following dependencies:
