@@ -7,7 +7,7 @@ The earliest stages of this work utilizing a binary environmental response, corr
 
 The work in P-model paved a path for a practical continuous control model used in S-model
 
-#S-model
+# S-model
 This directory contains the current research in link-state detection learning in limited mobility applied to underwataer acoustic sensor networks.
 
 # Installation of Dependencies.
