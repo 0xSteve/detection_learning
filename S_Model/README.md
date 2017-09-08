@@ -8,6 +8,6 @@ As an input this simulation requires a CSV file containing a discrete PDF. Start
 
 The depth of the water column is inferred from the granularity variable in the simulation, and the number of data points.  For example 70 data points with a granularity of 1 datapoint/m corresponds to a maximum depth of 69m.
 
-# Output files.
+# Output files
 
 The outputs are the action probabilities, and learned best depths as a file. These are handled in this way to allow the user to plot in the environment of their choice. In our case, we chose to use MATLAB. In fact, the CSV files are formatted specifically for MATLAB's CSV read function, and may not work off-the-shelf with other applications.
