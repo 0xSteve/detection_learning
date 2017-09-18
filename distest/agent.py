@@ -21,7 +21,9 @@ class Agent(object):
         # In order to do better movements we need to store information
         # about consecutive movement.
         self.consecutive = 0
-        self.threshold = pow(2, 0)
+        self.threshold = pow(2, 3)
+        self.move_count = 0
+        self.mean_movement = []
 
     def move(self):
         '''Move the mobile-agent based on the action chosen by the LRP LA.

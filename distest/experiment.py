@@ -4,7 +4,6 @@
 from agent import Agent
 from senvironment import SEnvironment
 import numpy as np
-from random import uniform as u
 
 
 class Experiment(object):
@@ -14,7 +13,10 @@ class Experiment(object):
         self.agent = Agent(precision, depth, channel_depth)
         self.max = 10000
         self.start = 0
+        self.expectation = 0
         self.precision = precision
+        self.dist_count = np.zeros(int(len(p_vector) / precision))
+        self.failure_rate = 0
         if(not isNS):
             self.environment = SEnvironment(p_vector)
             self.dist_est = np.zeros(int(len(p_vector) / precision))
@@ -108,8 +110,6 @@ class Experiment(object):
                     # if(max(self.agent.lrp.p) > 0.90):
                     if(max(self.agent.lrp.p) > 0.98 and
                        count == self.max - 1):
-                        # print("BOOOM DONE!!")
-                        # print("************************************")
                         self.learned_best[self.agent.depth - 1] += 1
                         # break
                 # self.action1_p = self.action1_p / (count - self.start)
@@ -120,20 +120,67 @@ class Experiment(object):
             self.action2_p[k] = self.action2_p[k] / (number_iterations)
 
     def distribution_estimate(self, number_iterations):
+        '''Find the complete distribution of a stationary stochastic
+           environment and report the expected number of movements to
+           find the entire distribution.'''
         temp = self.dist_est
+        count = 0
+        for i in range(number_iterations):
+            self.agent.lrp.reset_actions()
+            # self.agent.depth = int(u(0, 70))
+            self.agent.depth = self.agent.starting_depth
+            while(sum(self.dist_count) < len(self.dist_count)):
+                self.evaluate()
+                index = self.agent.depth - 1
+                self.dist_count[index] = 1
+                temp[index] = self.environment.p[index * self.precision]
+                count += 1
+                # if(max(self.agent.lrp.p) > 0.90):
+                if(self.agent.lrp.p[1] > 0.98):
+                    break
+            self.dist_count = np.zeros(len(self.dist_count))
+            self.dist_est = temp
+        self.expectation = count / number_iterations
+
+    def true_max_estimate(self, number_iterations):
+        '''Find the complete distribution of a stationary stochastic
+           environment and report the expected number of movements to
+           find the entire distribution.'''
+        temp = self.dist_est
+        moves = 0
+        successes = 0
+        failures = 0
         for i in range(number_iterations):
             count = 0
             self.agent.lrp.reset_actions()
             # self.agent.depth = int(u(0, 70))
             self.agent.depth = self.agent.starting_depth
-            # print(self.agent.depth)
-            while(True):  # and count < 1000000
+            index = self.agent.depth - 1
+            while(np.amax(temp) != np.amax(self.environment.p)):
                 self.evaluate()
-                index = self.agent.depth - 1
+                index = self.agent.depth
+                self.dist_count[index - 1] = 1
                 if(self.agent.action != self.agent.last_action):
-                    temp[index] = self.environment.p[index * self.precision]
-                count += 1
+                    temp[index - 1] = self.environment.p[index * self.precision - 1]
+                    # in this the dist_est becomes frequency of travels
+                    self.dist_est += 1
+                    count += 1
                 # if(max(self.agent.lrp.p) > 0.90):
                 if(self.agent.lrp.p[1] > 0.98):
                     break
-            self.dist_est = temp
+            moves += count
+            is_successful = "Success."
+            successes += 1
+            if(np.amax(temp) != np.amax(self.environment.p)):
+                is_successful = "####FAILURE####"
+                successes -= 1
+                failures += 1
+            print("(" + str(i) + "/" + str(number_iterations) + ")" +
+                  " maximum found: " + str(np.amax(temp)) +
+                  " status: " + is_successful)
+            temp = np.zeros(len(temp))
+            # if(np.amax(temp) == np.amax(self.environment.p)):
+            #     self.expectation = moves / i
+            #     break
+        self.expectation = moves / number_iterations
+        self.failure_rate = failures / (successes + failures)

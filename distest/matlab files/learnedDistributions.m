@@ -14,7 +14,7 @@ xlabel('Depth (m)')
 ylabel('Probability')
 
 %Read in the distributions from the csv files and plot them.
-linearDistEst = csvread('distributionEstimateLinear.csv');
+linearDistEst = csvread('maxEstimate.csv');
 linearDistEst =linearDistEst;
 figure
 stem(linearDistEst(:,1))
