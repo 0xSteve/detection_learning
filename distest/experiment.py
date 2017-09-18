@@ -152,7 +152,7 @@ class Experiment(object):
         failures = 0
         for i in range(number_iterations):
             count = 0
-            self.agent.lrp.reset_actions()
+            self.agent.reset_actions()
             # self.agent.depth = int(u(0, 70))
             self.agent.depth = self.agent.starting_depth
             index = self.agent.depth - 1

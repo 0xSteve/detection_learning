@@ -91,13 +91,15 @@ class Agent(object):
            number and the probability for the current depth of the
            mobile-agent.'''
         self.current_to = response
+        self.mean_movement.append(response)
+        self.move_count += 1
         # There is an important esoteric feature in this if statement.
         # Notice that the LA will reward up to two actions for the same result.
         # If the curreent best is equal to the absolute best both the
         # do-nothing and last rewarded action could be rewarded here. This is
         # intended by design, since the change in depth must be over estimated
         # before it can truly be found.
-        worse = self.current_to < self.best_to
+        worse = self.current_to < (sum(self.mean_movement) / self.move_count)
         # same_action = self.last_action == self.action
         if(worse):
             # This is the condition where the mobile-agent must tell the LRP
@@ -112,3 +114,8 @@ class Agent(object):
     def next_action(self):
         '''encapsulates the LRP next_action function.'''
         self.action = self.lrp.next_action()
+
+    def reset_actions(self):
+        self.mean_movement = []
+        self.move_count = 0
+        self.lrp.reset_actions()
