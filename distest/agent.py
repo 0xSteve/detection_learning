@@ -99,7 +99,8 @@ class Agent(object):
         # do-nothing and last rewarded action could be rewarded here. This is
         # intended by design, since the change in depth must be over estimated
         # before it can truly be found.
-        worse = self.current_to < (sum(self.mean_movement) / self.move_count)
+        worse = self.current_to < 1.75 * (sum(self.mean_movement) /
+                                          self.move_count)
         # same_action = self.last_action == self.action
         if(worse):
             # This is the condition where the mobile-agent must tell the LRP

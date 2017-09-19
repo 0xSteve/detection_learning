@@ -14,7 +14,7 @@ rando = int(u(0, 70))  # This will be the initial depth of the mobile-agent.
 # precision of 1m, max depth of 70m.
 experiment = Experiment(rando, 70, p_vec, 10)
 
-experiment.true_max_estimate(3000)
+experiment.true_max_estimate(150000)
 w = open('matlab files/maxEstimate.csv', 'w')
 for i in range(len(experiment.dist_est) - 1):
     w.write(str(experiment.dist_est[i]) + '\n')
