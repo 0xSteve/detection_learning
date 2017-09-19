@@ -161,7 +161,8 @@ class Experiment(object):
                 index = self.agent.depth
                 self.dist_count[index - 1] = 1
                 if(self.agent.action != self.agent.last_action):
-                    temp[index - 1] = self.environment.p[index * self.precision - 1]
+                    index1 = index * self.precision - 1
+                    temp[index - 1] = self.environment.p[index1]
                     # in this the dist_est becomes frequency of travels
                     self.dist_est += 1
                     count += 1
